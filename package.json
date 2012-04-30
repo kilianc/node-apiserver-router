@@ -1,0 +1,24 @@
+{
+  "author": "Kilian Ciuffolo <me@nailik.org> (http://nailik.org)",
+  "name": "apiserver-router",
+  "description": "A fast API router with integrated caching system",
+  "keywords": ["apiserver", "cache", "router"],
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kilianc/node-apiserver-router.git"
+  },
+  "main" : "./",
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": ">= v0.6.x"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "1.0.x",
+    "should": "0.6.1"
+  }
+}
