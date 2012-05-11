@@ -1,17 +1,20 @@
+function getFakeApi(name, httpMethod) {
+  return function (cb, requestHttpMethod) {
+    cb(this, httpMethod || requestHttpMethod, name)
+  }
+}
+
 module.exports = {
-  amAPublicApi: function (request, response) {
-    response.serveJSON({ success: true })
-  },
-  _notReachableAPI: function (request, response) {
-    response.serveJSON({ success: true })
-  },
-  errorApi: function (request, response) {
-    throw new Error('Aww')
-  },
-  'post': function (request, response) {
-    response.serveJSON(request.body)
-  },
-  'wrong_case_api': function (request, response) {
-    response.serveJSON({ success: true })
+  database: 'fake_database',
+  _privateMethod: getFakeApi('_privateMethod'),
+  amAPublicApi: getFakeApi('amAPublicApi'),
+  fooApi: getFakeApi('fooApi'),
+  post: getFakeApi('post'),
+  wrong_case_api: getFakeApi('wrong_case_api'),
+  AA: getFakeApi('AA'),
+  photo: {
+    get: getFakeApi('photo', 'get'),
+    post: getFakeApi('photo', 'post'),
+    delete: 'not_a_function'
   }
 }
