@@ -29,8 +29,18 @@ UserModule.prototype._checkFileExtension = function (request, response) { ... }
 ```
 
 ```javascript
-router.update({ '1': { randomPhotoModule: UserModule } })
-router.get('/1/random_photo_module/upload_photo') // returns the associated chain
+var modules = {
+  // API version
+  '1': {
+    // API resource
+    randomPhotoModule: UserModule
+  }
+}
+router.update(modules)
+
+//simulate a request object
+var fakeRequest = { pathname: '/1/random_photo_module/upload_photo' }
+router.get(fakeRequest) // returns the associated chain
 ```
 
 ## Class Method: constructor
@@ -83,18 +93,18 @@ This method returns a list of functions that will be executed with [fnchain](htt
 ### Syntax:
 
 ```javascript
-Router.prototype.get(pathname)
+Router.prototype.get(request)
 ```
 
 ### Arguments:
 
-* __pathname__ - (`String`)
+* __request__ - (`ServerRequest`) the request object already extended by the [ApiServer](https://github.com/kilianc/node-apiserver)
 
 ### Example:
 
 ```javascript
 ...
-router.get('/v1/users/signup')
+router.get(req)
 ...
 ```
 

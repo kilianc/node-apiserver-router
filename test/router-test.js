@@ -25,7 +25,7 @@ function checkLastChainLink(fn) {
 }
 
 function checkChain(router, route, expetedChain) {
-  var chain = router.get(route)
+  var chain = router.get({ pathname: route })
   checkLastChainLink(chain.pop())
   chain.should.eql(expetedChain, route)
 }
