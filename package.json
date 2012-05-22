@@ -3,7 +3,7 @@
   "name": "apiserver-router",
   "description": "A fast API router with integrated caching system",
   "keywords": ["apiserver", "cache", "router"],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "http://github.com/kilianc/node-apiserver-router.git"
