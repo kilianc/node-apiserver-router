@@ -213,16 +213,16 @@ describe('Router', function () {
       ;[
         ['/post', { param2: 'def_param2' }],
         ['/post/foo', { param1: 'foo', param2: 'def_param2' }],
-        ['/post/foo/bar', { param1: 'foo', param2: 'def_param2' }],
+        ['/post/foo/bar', { param1: 'foo', param2: 'bar' }],
         ['/test_module', { param1: false, param3: 'param3' }],
         ['/test_module/', { param1: false, param3: 'param3' }],
         ['/test_module//', { param1: false, param3: 'param3' }],
-        ['/test_module/foo', { param1: false, param3: 'param3' }],
-        ['/test_module/foo/', { param1: false, param3: 'param3' }],
+        ['/test_module/foo', { param1: 'foo', param3: 'param3' }],
+        ['/test_module/foo/', { param1: 'foo', param3: 'param3' }],
         ['/test_module//bar', { param1: false, param2: 'bar', param3: 'param3' }],
-        ['/test_module/foo/bar', { param1: false, param2: 'bar', param3: 'param3' }],
-        ['/test_module/foo/bar/', { param1: false, param2: 'bar', param3: 'param3' }],
-        ['/test_module/foo/bar//', { param1: false, param2: 'bar', param3: 'param3' }]
+        ['/test_module/foo/bar', { param1: 'foo', param2: 'bar', param3: 'param3' }],
+        ['/test_module/foo/bar/', { param1: 'foo', param2: 'bar', param3: 'param3' }],
+        ['/test_module/foo/bar//', { param1: 'foo', param2: 'bar', param3: 'param3' }]
       ].forEach(function (item) {
         generateFakeRequests(item[0]).forEach(function (request) {
           router.getCustom(request)
