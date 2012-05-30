@@ -1,7 +1,8 @@
 var should = require('should'),
     Router = require('../'),
     XRegExp = require('xregexp').XRegExp,
-    testModule = require('./fixtures/router-module')
+    objectModule = require('./fixtures/router-module'),
+    classModule = require('./fixtures/router-module-class')
 
 var router
 var fakeMiddlewares = generateFakeMiddlewares()
@@ -24,9 +25,25 @@ describe('Router', function () {
     })
   })
   describe('#update()', function () {
-    it('should create routes', function () {
+    it('should create routes / object', function () {
       router = new Router()
-      router.update({ v1: { test: testModule } })
+      router.update({ v1: { test: objectModule } })
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/am_a_public_api')
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/foo_api')
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/post')
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/wrong_case_api')
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/a_a')
+      new should.Assertion(router.defaultRoutes).have.property('/v1/test/photo')
+      checkHttpMethods(router.defaultRoutes['/v1/test/am_a_public_api'])
+      checkHttpMethods(router.defaultRoutes['/v1/test/foo_api'])
+      checkHttpMethods(router.defaultRoutes['/v1/test/post'])
+      checkHttpMethods(router.defaultRoutes['/v1/test/wrong_case_api'])
+      checkHttpMethods(router.defaultRoutes['/v1/test/a_a'])
+      checkHttpMethods(router.defaultRoutes['/v1/test/photo'], ['get', 'post'])
+    })
+    it('should create routes / class', function () {
+      router = new Router()
+      router.update({ v1: { test: new classModule() } })
       new should.Assertion(router.defaultRoutes).have.property('/v1/test/am_a_public_api')
       new should.Assertion(router.defaultRoutes).have.property('/v1/test/foo_api')
       new should.Assertion(router.defaultRoutes).have.property('/v1/test/post')
@@ -42,12 +59,12 @@ describe('Router', function () {
     })
     it('should skip private methods', function () {
       router = new Router()
-      router.update({ v1: { test: testModule } })
+      router.update({ v1: { test: objectModule } })
       new should.Assertion(router.defaultRoutes).not.have.key('/v1/test/_private_method')
     })
     it('should skip non endpoints', function () {
       router = new Router()
-      router.update({ v1: { test: testModule } })
+      router.update({ v1: { test: objectModule } })
       new should.Assertion(router.defaultRoutes).not.have.key('/v1/test/database')
     })
     ;[
@@ -66,7 +83,7 @@ describe('Router', function () {
   describe('#addRoute()', function () {
     it('should throw error if the endpoint is not found', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       ;[
         '1/typo#post',
         '1/test#typo',
@@ -77,12 +94,12 @@ describe('Router', function () {
     })
     it('should accept a XRegExp', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute(XRegExp('/post/(?<message>[\\w]+)'), '1/test#post')
     })
     it('should throw error if the route is not a String or a XRegExp', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       ;[
         /^/,
         {},
@@ -93,7 +110,7 @@ describe('Router', function () {
     })
     it('should store a custom route', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post')
       router.customRoutes.should.have.length(1)
       router.customRoutes.head.should.have.keys(['xRegExp', 'endpoint', 'defaults'])
@@ -103,19 +120,19 @@ describe('Router', function () {
     it('should store a custom route with default params', function () {
       var defaults = { foo: false, bar: 'foo' }
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post', defaults)
       router.customRoutes.head.defaults.should.equal(defaults)
     })
     it('should store a custom route with custom defaultRoute', function () {
       router = new Router({ defaultRoute: '/:module/:method/:version' })
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post')
       new should.Assertion(router.disabledDefaultRoutes).eql({ '/test/post/1': true })
     })
     it('should store a custom route and keep the default one', function () {
       router = new Router({ defaultRoute: '/:module/:method/:version' })
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post', null, true)
       new should.Assertion(router.disabledDefaultRoutes).eql({})
     })
@@ -123,7 +140,7 @@ describe('Router', function () {
   describe('#getDefault()', function () {
     it('should return the functions chain', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } }, [
+      router.update({ 1: { test: objectModule } }, [
         { route: /.+/, handle: fakeMiddlewares[0] },
         { route: /\/am_a/, handle: fakeMiddlewares[1] },
         { route: /api$/, handle: fakeMiddlewares[2] },
@@ -139,7 +156,7 @@ describe('Router', function () {
     })
     it('should return the functions chain / custom defaultRoute', function () {
       router = new Router({ defaultRoute: '/:module/api/:version/:method' })
-      router.update({ 1: { test: testModule } }, [
+      router.update({ 1: { test: objectModule } }, [
         { route: /.+/, handle: fakeMiddlewares[0] },
         { route: /\/am_a/, handle: fakeMiddlewares[1] },
         { route: /api$/, handle: fakeMiddlewares[2] },
@@ -157,7 +174,7 @@ describe('Router', function () {
   describe('#getCustom()', function () {
     it('should return the functions chain', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } }, [
+      router.update({ 1: { test: objectModule } }, [
         { route: /.+/, handle: fakeMiddlewares[0] },
         { route: /$\/post/, handle: fakeMiddlewares[1] },
         { route: /st/, handle: fakeMiddlewares[2] },
@@ -172,7 +189,7 @@ describe('Router', function () {
     })
     it('should parse route parameters', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/post/:param1/:param2', '1/test#post')
       router.addRoute('/test_module/:param1/:param2', '1/test#post')
       router.addRoute(XRegExp('^/p/(?<message>[\\w!]+)$'), '1/test#post')
@@ -199,7 +216,7 @@ describe('Router', function () {
     })
     it('should return undefined if none match', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/photo', '1/test#photo')
       generateFakeRequests('/photo', null, ['delete']).forEach(function (request) {
         should.not.exist(router.getCustom(request))
@@ -207,7 +224,7 @@ describe('Router', function () {
     })
     it('should merge defaults with route parameters', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/post/:param1/:param2', '1/test#post', { param2: 'def_param2'})
       router.addRoute('/test_module/:param1/:param2', '1/test#post', { param1: false, param3: 'param3' })
       ;[
@@ -232,7 +249,7 @@ describe('Router', function () {
     })
     it('should merge defaults with route parameters and querystring', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/post/:param1/:param2', '1/test#post', { param2: 'def_param2'})
       router.addRoute('/test_module/:param1/:param2', '1/test#post', { param1: false, param3: 'param3' })
       ;[
@@ -248,7 +265,7 @@ describe('Router', function () {
     })
     it('should order custom routes by hits', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       var customRoutes = [
         ['/post', '1/test#post', { pathname: '/post' } ],
         ['/public_api', '1/test#amAPublicApi', { pathname: '/public_api' }],
@@ -270,7 +287,7 @@ describe('Router', function () {
   describe('#get()', function () {
     it('should switch between custom and default routes', function () {
       router = new Router()
-      router.update({ 1: { test: testModule } })
+      router.update({ 1: { test: objectModule } })
       router.addRoute('/post/:param1/:param2', '1/test#post')
       router.addRoute('/foo_api/:param1/:param2', '1/test#fooApi', {}, true)
       router.addRoute('/test_module/:param1/:param2', '1/test#post')

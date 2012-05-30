@@ -74,70 +74,71 @@ if (! _$jscoverage['router.js']) {
   _$jscoverage['router.js'][118] = 0;
   _$jscoverage['router.js'][119] = 0;
   _$jscoverage['router.js'][120] = 0;
-  _$jscoverage['router.js'][122] = 0;
+  _$jscoverage['router.js'][121] = 0;
   _$jscoverage['router.js'][123] = 0;
   _$jscoverage['router.js'][124] = 0;
   _$jscoverage['router.js'][125] = 0;
   _$jscoverage['router.js'][126] = 0;
-  _$jscoverage['router.js'][132] = 0;
+  _$jscoverage['router.js'][127] = 0;
   _$jscoverage['router.js'][133] = 0;
-  _$jscoverage['router.js'][137] = 0;
+  _$jscoverage['router.js'][134] = 0;
   _$jscoverage['router.js'][138] = 0;
   _$jscoverage['router.js'][139] = 0;
-  _$jscoverage['router.js'][142] = 0;
+  _$jscoverage['router.js'][140] = 0;
   _$jscoverage['router.js'][143] = 0;
-  _$jscoverage['router.js'][146] = 0;
+  _$jscoverage['router.js'][144] = 0;
   _$jscoverage['router.js'][147] = 0;
   _$jscoverage['router.js'][148] = 0;
   _$jscoverage['router.js'][149] = 0;
-  _$jscoverage['router.js'][156] = 0;
+  _$jscoverage['router.js'][150] = 0;
   _$jscoverage['router.js'][157] = 0;
   _$jscoverage['router.js'][158] = 0;
   _$jscoverage['router.js'][159] = 0;
   _$jscoverage['router.js'][160] = 0;
   _$jscoverage['router.js'][161] = 0;
-  _$jscoverage['router.js'][165] = 0;
+  _$jscoverage['router.js'][162] = 0;
   _$jscoverage['router.js'][166] = 0;
   _$jscoverage['router.js'][167] = 0;
-  _$jscoverage['router.js'][170] = 0;
-  _$jscoverage['router.js'][173] = 0;
+  _$jscoverage['router.js'][168] = 0;
+  _$jscoverage['router.js'][171] = 0;
   _$jscoverage['router.js'][174] = 0;
   _$jscoverage['router.js'][175] = 0;
   _$jscoverage['router.js'][176] = 0;
   _$jscoverage['router.js'][177] = 0;
   _$jscoverage['router.js'][178] = 0;
-  _$jscoverage['router.js'][182] = 0;
-  _$jscoverage['router.js'][185] = 0;
+  _$jscoverage['router.js'][179] = 0;
+  _$jscoverage['router.js'][183] = 0;
   _$jscoverage['router.js'][186] = 0;
   _$jscoverage['router.js'][187] = 0;
   _$jscoverage['router.js'][188] = 0;
   _$jscoverage['router.js'][189] = 0;
-  _$jscoverage['router.js'][191] = 0;
-  _$jscoverage['router.js'][196] = 0;
+  _$jscoverage['router.js'][190] = 0;
+  _$jscoverage['router.js'][192] = 0;
   _$jscoverage['router.js'][197] = 0;
   _$jscoverage['router.js'][198] = 0;
   _$jscoverage['router.js'][199] = 0;
   _$jscoverage['router.js'][200] = 0;
   _$jscoverage['router.js'][201] = 0;
-  _$jscoverage['router.js'][204] = 0;
+  _$jscoverage['router.js'][202] = 0;
   _$jscoverage['router.js'][205] = 0;
   _$jscoverage['router.js'][206] = 0;
-  _$jscoverage['router.js'][210] = 0;
-  _$jscoverage['router.js'][213] = 0;
+  _$jscoverage['router.js'][207] = 0;
+  _$jscoverage['router.js'][211] = 0;
   _$jscoverage['router.js'][214] = 0;
   _$jscoverage['router.js'][215] = 0;
   _$jscoverage['router.js'][216] = 0;
   _$jscoverage['router.js'][217] = 0;
   _$jscoverage['router.js'][218] = 0;
-  _$jscoverage['router.js'][221] = 0;
+  _$jscoverage['router.js'][219] = 0;
   _$jscoverage['router.js'][222] = 0;
   _$jscoverage['router.js'][223] = 0;
   _$jscoverage['router.js'][224] = 0;
-  _$jscoverage['router.js'][228] = 0;
-  _$jscoverage['router.js'][231] = 0;
+  _$jscoverage['router.js'][225] = 0;
+  _$jscoverage['router.js'][229] = 0;
   _$jscoverage['router.js'][232] = 0;
   _$jscoverage['router.js'][233] = 0;
   _$jscoverage['router.js'][234] = 0;
+  _$jscoverage['router.js'][235] = 0;
 }
 _$jscoverage['router.js'][1]++;
 var util = require("util"), XRegExp = require("xregexp").XRegExp, caseRegExp = /([A-Z]+[a-z]|[A-Z]+)/g, LinkedList = require("./linkedlist"), HTTP_METHODS = ["head", "get", "post", "put", "delete", "trace", "options", "connect", "patch"];
@@ -302,177 +303,179 @@ Router.prototype.update = (function (modules, middlewareList) {
   _$jscoverage['router.js'][117]++;
   var module = modules[version][moduleName];
   _$jscoverage['router.js'][118]++;
-  Object.keys(module).forEach((function (methodName) {
+  var methodNames = Object.keys(module.__proto__).concat(Object.keys(module));
   _$jscoverage['router.js'][119]++;
+  methodNames.forEach((function (methodName) {
+  _$jscoverage['router.js'][120]++;
   if (methodName[0] === "_") {
-    _$jscoverage['router.js'][120]++;
+    _$jscoverage['router.js'][121]++;
     return;
   }
-  _$jscoverage['router.js'][122]++;
-  var method = module[methodName];
   _$jscoverage['router.js'][123]++;
-  var method_name = normalizeCase(methodName);
+  var method = module[methodName];
   _$jscoverage['router.js'][124]++;
-  var route = self.getDefaultRoute(version, module_name, method_name);
+  var method_name = normalizeCase(methodName);
   _$jscoverage['router.js'][125]++;
+  var route = self.getDefaultRoute(version, module_name, method_name);
+  _$jscoverage['router.js'][126]++;
   if (routes[route]) {
-    _$jscoverage['router.js'][126]++;
+    _$jscoverage['router.js'][127]++;
     throw new Error(util.format("Routing conflict on \"%s\": %s.%s.%s is anbiguous with %s.%s.%s", route, conflictsMap[route].version, conflictsMap[route].moduleName, conflictsMap[route].methodName, version, moduleName, methodName));
   }
-  _$jscoverage['router.js'][132]++;
-  conflictsMap[route] = {version: version, moduleName: moduleName, methodName: methodName};
   _$jscoverage['router.js'][133]++;
+  conflictsMap[route] = {version: version, moduleName: moduleName, methodName: methodName};
+  _$jscoverage['router.js'][134]++;
   routes[route] = createEndpointChain(module, method, getMiddlewareChain(middlewareList, route));
 }));
 }));
 }));
-  _$jscoverage['router.js'][137]++;
-  this.modules = modules;
   _$jscoverage['router.js'][138]++;
-  this.middlewareList = middlewareList;
+  this.modules = modules;
   _$jscoverage['router.js'][139]++;
+  this.middlewareList = middlewareList;
+  _$jscoverage['router.js'][140]++;
   this.defaultRoutes = routes;
 });
-_$jscoverage['router.js'][142]++;
+_$jscoverage['router.js'][143]++;
 function normalizeCase(str) {
-  _$jscoverage['router.js'][143]++;
+  _$jscoverage['router.js'][144]++;
   return str.replace(/([A-Z][^A-Z]*)/g, "_$1").replace(/^(_)/, "").toLowerCase();
 }
-_$jscoverage['router.js'][146]++;
+_$jscoverage['router.js'][147]++;
 function getEndpointDescription(endpoint) {
-  _$jscoverage['router.js'][147]++;
-  var xRegExp = XRegExp("(?<version>[^/]+)/(?<moduleName>[^#]+)#(?<methodName>.+)");
   _$jscoverage['router.js'][148]++;
-  var result = XRegExp.exec(endpoint, xRegExp);
+  var xRegExp = XRegExp("(?<version>[^/]+)/(?<moduleName>[^#]+)#(?<methodName>.+)");
   _$jscoverage['router.js'][149]++;
+  var result = XRegExp.exec(endpoint, xRegExp);
+  _$jscoverage['router.js'][150]++;
   return ({version: result.version, moduleName: result.moduleName, methodName: result.methodName});
 }
-_$jscoverage['router.js'][156]++;
+_$jscoverage['router.js'][157]++;
 function getRouteParams(xRegExpResult, xRegExp, defaults) {
-  _$jscoverage['router.js'][157]++;
-  var params = Object.create(null);
   _$jscoverage['router.js'][158]++;
+  var params = Object.create(null);
+  _$jscoverage['router.js'][159]++;
   if (xRegExp.xregexp.captureNames) {
-    _$jscoverage['router.js'][159]++;
+    _$jscoverage['router.js'][160]++;
     xRegExp.xregexp.captureNames.forEach((function (paramName) {
-  _$jscoverage['router.js'][160]++;
+  _$jscoverage['router.js'][161]++;
   if (xRegExpResult[paramName] !== undefined) {
-    _$jscoverage['router.js'][161]++;
+    _$jscoverage['router.js'][162]++;
     params[paramName] = xRegExpResult[paramName];
   }
 }));
   }
-  _$jscoverage['router.js'][165]++;
-  Object.keys(defaults).forEach((function (paramName) {
   _$jscoverage['router.js'][166]++;
+  Object.keys(defaults).forEach((function (paramName) {
+  _$jscoverage['router.js'][167]++;
   if (params[paramName] === undefined) {
-    _$jscoverage['router.js'][167]++;
+    _$jscoverage['router.js'][168]++;
     params[paramName] = defaults[paramName];
   }
 }));
-  _$jscoverage['router.js'][170]++;
+  _$jscoverage['router.js'][171]++;
   return params;
 }
-_$jscoverage['router.js'][173]++;
+_$jscoverage['router.js'][174]++;
 function getMiddlewareChain(middlewareList, route) {
-  _$jscoverage['router.js'][174]++;
-  var chain = [];
   _$jscoverage['router.js'][175]++;
+  var chain = [];
+  _$jscoverage['router.js'][176]++;
   if (middlewareList) {
-    _$jscoverage['router.js'][176]++;
+    _$jscoverage['router.js'][177]++;
     middlewareList.forEach((function (middleware) {
-  _$jscoverage['router.js'][177]++;
+  _$jscoverage['router.js'][178]++;
   if (route.match(middleware.route)) {
-    _$jscoverage['router.js'][178]++;
+    _$jscoverage['router.js'][179]++;
     chain.push(middleware.handle);
   }
 }));
   }
-  _$jscoverage['router.js'][182]++;
+  _$jscoverage['router.js'][183]++;
   return chain;
 }
-_$jscoverage['router.js'][185]++;
+_$jscoverage['router.js'][186]++;
 function getLastChainRing(endpoint) {
-  _$jscoverage['router.js'][186]++;
-  return (function (request, response, callback) {
   _$jscoverage['router.js'][187]++;
+  return (function (request, response, callback) {
+  _$jscoverage['router.js'][188]++;
   try {
-    _$jscoverage['router.js'][188]++;
-    endpoint(request, response);
     _$jscoverage['router.js'][189]++;
+    endpoint(request, response);
+    _$jscoverage['router.js'][190]++;
     callback();
   }
   catch (err) {
-    _$jscoverage['router.js'][191]++;
+    _$jscoverage['router.js'][192]++;
     callback(err);
   }
 });
 }
-_$jscoverage['router.js'][196]++;
+_$jscoverage['router.js'][197]++;
 function createEndpoint(scope, method) {
-  _$jscoverage['router.js'][197]++;
-  var endpoint = Object.create(null);
   _$jscoverage['router.js'][198]++;
+  var endpoint = Object.create(null);
+  _$jscoverage['router.js'][199]++;
   if (typeof method === "function") {
-    _$jscoverage['router.js'][199]++;
-    var endpointFn = getLastChainRing(method.bind(scope));
     _$jscoverage['router.js'][200]++;
+    var endpointFn = getLastChainRing(method.bind(scope));
+    _$jscoverage['router.js'][201]++;
     Router.prototype.HTTP_METHODS.forEach((function (httpMethod) {
-  _$jscoverage['router.js'][201]++;
+  _$jscoverage['router.js'][202]++;
   endpoint[httpMethod.toUpperCase()] = endpointFn;
 }));
   }
   else {
-    _$jscoverage['router.js'][204]++;
+    _$jscoverage['router.js'][205]++;
     Router.prototype.HTTP_METHODS.forEach((function (httpMethod) {
-  _$jscoverage['router.js'][205]++;
+  _$jscoverage['router.js'][206]++;
   if (typeof method[httpMethod] === "function") {
-    _$jscoverage['router.js'][206]++;
+    _$jscoverage['router.js'][207]++;
     endpoint[httpMethod.toUpperCase()] = getLastChainRing(method[httpMethod].bind(scope));
   }
 }));
   }
-  _$jscoverage['router.js'][210]++;
+  _$jscoverage['router.js'][211]++;
   return endpoint;
 }
-_$jscoverage['router.js'][213]++;
+_$jscoverage['router.js'][214]++;
 function createEndpointChain(scope, method, chain) {
-  _$jscoverage['router.js'][214]++;
-  var endpointChain = Object.create(null);
   _$jscoverage['router.js'][215]++;
+  var endpointChain = Object.create(null);
+  _$jscoverage['router.js'][216]++;
   if (typeof method === "function") {
-    _$jscoverage['router.js'][216]++;
-    chain.push(getLastChainRing(method.bind(scope)));
     _$jscoverage['router.js'][217]++;
+    chain.push(getLastChainRing(method.bind(scope)));
+    _$jscoverage['router.js'][218]++;
     Router.prototype.HTTP_METHODS.forEach((function (httpMethod) {
-  _$jscoverage['router.js'][218]++;
+  _$jscoverage['router.js'][219]++;
   endpointChain[httpMethod.toUpperCase()] = chain;
 }));
   }
   else {
-    _$jscoverage['router.js'][221]++;
+    _$jscoverage['router.js'][222]++;
     Router.prototype.HTTP_METHODS.forEach((function (httpMethod) {
-  _$jscoverage['router.js'][222]++;
+  _$jscoverage['router.js'][223]++;
   if (typeof method[httpMethod] === "function") {
-    _$jscoverage['router.js'][223]++;
-    endpointChain[httpMethod.toUpperCase()] = chain.slice(0);
     _$jscoverage['router.js'][224]++;
+    endpointChain[httpMethod.toUpperCase()] = chain.slice(0);
+    _$jscoverage['router.js'][225]++;
     endpointChain[httpMethod.toUpperCase()].push(getLastChainRing(method[httpMethod].bind(scope)));
   }
 }));
   }
-  _$jscoverage['router.js'][228]++;
+  _$jscoverage['router.js'][229]++;
   return endpointChain;
 }
-_$jscoverage['router.js'][231]++;
+_$jscoverage['router.js'][232]++;
 function fillObject(targetObj, fillObj) {
-  _$jscoverage['router.js'][232]++;
-  Object.keys(fillObj).forEach((function (key) {
   _$jscoverage['router.js'][233]++;
+  Object.keys(fillObj).forEach((function (key) {
+  _$jscoverage['router.js'][234]++;
   if (! targetObj.hasOwnProperty(key)) {
-    _$jscoverage['router.js'][234]++;
+    _$jscoverage['router.js'][235]++;
     targetObj[key] = fillObj[key];
   }
 }));
 }
-_$jscoverage['router.js'].source = ["var util = require('util'),","    XRegExp = require('xregexp').XRegExp,","    caseRegExp = /([A-Z]+[a-z]|[A-Z]+)/g,","    LinkedList = require('./linkedlist'),","    HTTP_METHODS = ['head', 'get', 'post', 'put', 'delete', 'trace', 'options', 'connect', 'patch']","","var Router = module.exports = function (options) {","  var self = this","  options = options || {}","  Object.keys(options).forEach(function (key) {","    if (!self.__proto__.hasOwnProperty(key)) {","      self[key] = options[key]","    }","  })","  this.modules = null","  this.middlewareList = null","  this.customRoutes = new LinkedList()","  this.defaultRoute = this.defaultRoute || '/:version/:module/:method'","  this.defaultRoutes = Object.create(null)","  this.disabledDefaultRoutes = Object.create(null)","}","","Router.prototype.HTTP_METHODS = ['head', 'get', 'post', 'put', 'delete', 'trace', 'options', 'connect', 'patch']","","Router.prototype.addRoute = function addRoute(route, endpointPath, defaults, keepDefault) {","  var xRegExp","  var endpointDescription = getEndpointDescription(endpointPath)","  try {","    var module = this.modules[endpointDescription.version][endpointDescription.moduleName]","    var method = module[endpointDescription.methodName]","    var endopoint = createEndpoint(module, method)","  } catch (e) {","    throw new Error(util.format('Can not resolve endopoint %s (%s)', endpointPath, JSON.stringify(endpointDescription)))","  }","  if (route.constructor === String) {","    xRegExp = XRegExp('^' + route.replace(/\\/:([\\w]+)/g, '(?:/(?&lt;$1&gt;[^/]+)?)?') + '/*$')","  } else if (route.xregexp !== undefined) {","    xRegExp = route","  } else {","    throw new Error(util.format('Route must be a String or a XRegExp: %s', route))","  }","  this.customRoutes.push({","    xRegExp: xRegExp,","    endpoint: endopoint,","    defaults: defaults || Object.create(null)","  })","  if (!keepDefault) {","    this.disabledDefaultRoutes[","      this.getDefaultRoute(","        endpointDescription.version,","        normalizeCase(endpointDescription.moduleName),","        normalizeCase(endpointDescription.methodName)","      )","    ] = true","  }","  return this","}","","Router.prototype.addRoutes = function (routes) {","  var self = this","  routes.forEach(function (route) {","    self.addRoute.apply(self, route)","  })","}","","Router.prototype.getDefaultRoute = function (version, moduleName, methodName) {","  return this.defaultRoute.replace(':version', version)","                          .replace(':module', moduleName)","                          .replace(':method', methodName)","}","","Router.prototype.get = function (request) {","  return this.getDefault(request) || this.getCustom(request)","}","","Router.prototype.getDefault = function (request) {","  var pathname = request.pathname","  if (!this.disabledDefaultRoutes[pathname]) {","    var endpoint = this.defaultRoutes[pathname]","    return endpoint &amp;&amp; endpoint[request.method]","  }","}","","Router.prototype.getCustom = function (request) {","  var pathname = request.pathname","  var route, endpoint, xRegExpResult, routeParams, chain","  var customRoutes = this.customRoutes.resetCursor()","  while (route = customRoutes.next()) {","    if (pathname.match(route.xRegExp)) {","      // check endpoint availability for the current http method","      endpoint = route.endpoint[request.method]","      if (!endpoint) {","        break","      }","      // parse route parameters and merge into the request.querystring object","      xRegExpResult = XRegExp.exec(pathname, route.xRegExp)","      routeParams = getRouteParams(xRegExpResult, route.xRegExp, route.defaults)","      fillObject(request.querystring, routeParams)","      // get the chain","      chain = getMiddlewareChain(this.middlewareList, pathname)","      chain.push(endpoint)","      // keep routes ordered by hits","      customRoutes.unshiftCurrent()","      break","    }","  }","  return chain","}","","Router.prototype.update = function (modules, middlewareList) {","  var self = this","  var routes = Object.create(null)","  var conflictsMap = Object.create(null)","  Object.keys(modules).forEach(function (version) {","    Object.keys(modules[version]).forEach(function (moduleName) {","      var module_name = normalizeCase(moduleName)","      var module = modules[version][moduleName]","      Object.keys(module).forEach(function (methodName) {","        if (methodName[0] === '_') {","          return","        }","        var method = module[methodName]","        var method_name = normalizeCase(methodName)","        var route = self.getDefaultRoute(version, module_name, method_name)","        if (routes[route]) {","          throw new Error(util.format('Routing conflict on \"%s\": %s.%s.%s is anbiguous with %s.%s.%s',","            route,","            conflictsMap[route].version, conflictsMap[route].moduleName, conflictsMap[route].methodName,","            version, moduleName, methodName","          ))","        }","        conflictsMap[route] = { version: version, moduleName: moduleName, methodName: methodName }","        routes[route] = createEndpointChain(module, method, getMiddlewareChain(middlewareList, route))","      })","    })","  })","  this.modules = modules","  this.middlewareList = middlewareList","  this.defaultRoutes = routes","}","","function normalizeCase(str) {","  return str.replace(/([A-Z][^A-Z]*)/g, '_$1').replace(/^(_)/, '').toLowerCase()","}","","function getEndpointDescription(endpoint) {","  var xRegExp = XRegExp('(?&lt;version&gt;[^/]+)/(?&lt;moduleName&gt;[^#]+)#(?&lt;methodName&gt;.+)')","  var result = XRegExp.exec(endpoint, xRegExp)","  return {","    version: result.version,","    moduleName: result.moduleName,","    methodName: result.methodName","  }","}","","function getRouteParams(xRegExpResult, xRegExp, defaults) {","  var params = Object.create(null)","  if (xRegExp.xregexp.captureNames) {","    xRegExp.xregexp.captureNames.forEach(function (paramName) {","      if (xRegExpResult[paramName] !== undefined) {","        params[paramName] = xRegExpResult[paramName]","      }","    })","  }","  Object.keys(defaults).forEach(function (paramName) {","    if (params[paramName] === undefined) {","      params[paramName] = defaults[paramName]","    }","  })","  return params","}","","function getMiddlewareChain(middlewareList, route) {","  var chain = []","  if (middlewareList) {","    middlewareList.forEach(function (middleware) {","      if (route.match(middleware.route)) {","        chain.push(middleware.handle)","      }","    })","  }","  return chain","}","","function getLastChainRing(endpoint) {","  return function (request, response, callback) {","    try {","      endpoint(request, response)","      callback()","    } catch (err) {","      callback(err)","    }","  }","}","","function createEndpoint(scope, method) {","  var endpoint = Object.create(null)","  if (typeof method === 'function') {","    var endpointFn = getLastChainRing(method.bind(scope))","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      endpoint[httpMethod.toUpperCase()] = endpointFn","    })","  } else {","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      if (typeof method[httpMethod] === 'function') {","        endpoint[httpMethod.toUpperCase()] = getLastChainRing(method[httpMethod].bind(scope))","      }","    })","  }","  return endpoint","}","","function createEndpointChain(scope, method, chain) {","  var endpointChain = Object.create(null)","  if (typeof method === 'function') {","    chain.push(getLastChainRing(method.bind(scope)))","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      endpointChain[httpMethod.toUpperCase()] = chain","    })","  } else {","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      if (typeof method[httpMethod] === 'function') {","        endpointChain[httpMethod.toUpperCase()] = chain.slice(0)","        endpointChain[httpMethod.toUpperCase()].push(getLastChainRing(method[httpMethod].bind(scope)))","      }","    })","  }","  return endpointChain","}","","function fillObject (targetObj, fillObj) {","  Object.keys(fillObj).forEach(function (key) {","    if (!targetObj.hasOwnProperty(key)) {","      targetObj[key] = fillObj[key]","    }","  })","}"];
+_$jscoverage['router.js'].source = ["var util = require('util'),","    XRegExp = require('xregexp').XRegExp,","    caseRegExp = /([A-Z]+[a-z]|[A-Z]+)/g,","    LinkedList = require('./linkedlist'),","    HTTP_METHODS = ['head', 'get', 'post', 'put', 'delete', 'trace', 'options', 'connect', 'patch']","","var Router = module.exports = function (options) {","  var self = this","  options = options || {}","  Object.keys(options).forEach(function (key) {","    if (!self.__proto__.hasOwnProperty(key)) {","      self[key] = options[key]","    }","  })","  this.modules = null","  this.middlewareList = null","  this.customRoutes = new LinkedList()","  this.defaultRoute = this.defaultRoute || '/:version/:module/:method'","  this.defaultRoutes = Object.create(null)","  this.disabledDefaultRoutes = Object.create(null)","}","","Router.prototype.HTTP_METHODS = ['head', 'get', 'post', 'put', 'delete', 'trace', 'options', 'connect', 'patch']","","Router.prototype.addRoute = function addRoute(route, endpointPath, defaults, keepDefault) {","  var xRegExp","  var endpointDescription = getEndpointDescription(endpointPath)","  try {","    var module = this.modules[endpointDescription.version][endpointDescription.moduleName]","    var method = module[endpointDescription.methodName]","    var endopoint = createEndpoint(module, method)","  } catch (e) {","    throw new Error(util.format('Can not resolve endopoint %s (%s)', endpointPath, JSON.stringify(endpointDescription)))","  }","  if (route.constructor === String) {","    xRegExp = XRegExp('^' + route.replace(/\\/:([\\w]+)/g, '(?:/(?&lt;$1&gt;[^/]+)?)?') + '/*$')","  } else if (route.xregexp !== undefined) {","    xRegExp = route","  } else {","    throw new Error(util.format('Route must be a String or a XRegExp: %s', route))","  }","  this.customRoutes.push({","    xRegExp: xRegExp,","    endpoint: endopoint,","    defaults: defaults || Object.create(null)","  })","  if (!keepDefault) {","    this.disabledDefaultRoutes[","      this.getDefaultRoute(","        endpointDescription.version,","        normalizeCase(endpointDescription.moduleName),","        normalizeCase(endpointDescription.methodName)","      )","    ] = true","  }","  return this","}","","Router.prototype.addRoutes = function (routes) {","  var self = this","  routes.forEach(function (route) {","    self.addRoute.apply(self, route)","  })","}","","Router.prototype.getDefaultRoute = function (version, moduleName, methodName) {","  return this.defaultRoute.replace(':version', version)","                          .replace(':module', moduleName)","                          .replace(':method', methodName)","}","","Router.prototype.get = function (request) {","  return this.getDefault(request) || this.getCustom(request)","}","","Router.prototype.getDefault = function (request) {","  var pathname = request.pathname","  if (!this.disabledDefaultRoutes[pathname]) {","    var endpoint = this.defaultRoutes[pathname]","    return endpoint &amp;&amp; endpoint[request.method]","  }","}","","Router.prototype.getCustom = function (request) {","  var pathname = request.pathname","  var route, endpoint, xRegExpResult, routeParams, chain","  var customRoutes = this.customRoutes.resetCursor()","  while (route = customRoutes.next()) {","    if (pathname.match(route.xRegExp)) {","      // check endpoint availability for the current http method","      endpoint = route.endpoint[request.method]","      if (!endpoint) {","        break","      }","      // parse route parameters and merge into the request.querystring object","      xRegExpResult = XRegExp.exec(pathname, route.xRegExp)","      routeParams = getRouteParams(xRegExpResult, route.xRegExp, route.defaults)","      fillObject(request.querystring, routeParams)","      // get the chain","      chain = getMiddlewareChain(this.middlewareList, pathname)","      chain.push(endpoint)","      // keep routes ordered by hits","      customRoutes.unshiftCurrent()","      break","    }","  }","  return chain","}","","Router.prototype.update = function (modules, middlewareList) {","  var self = this","  var routes = Object.create(null)","  var conflictsMap = Object.create(null)","  Object.keys(modules).forEach(function (version) {","    Object.keys(modules[version]).forEach(function (moduleName) {","      var module_name = normalizeCase(moduleName)","      var module = modules[version][moduleName]","      var methodNames = Object.keys(module.__proto__).concat(Object.keys(module))","      methodNames.forEach(function (methodName) {","        if (methodName[0] === '_') {","          return","        }","        var method = module[methodName]","        var method_name = normalizeCase(methodName)","        var route = self.getDefaultRoute(version, module_name, method_name)","        if (routes[route]) {","          throw new Error(util.format('Routing conflict on \"%s\": %s.%s.%s is anbiguous with %s.%s.%s',","            route,","            conflictsMap[route].version, conflictsMap[route].moduleName, conflictsMap[route].methodName,","            version, moduleName, methodName","          ))","        }","        conflictsMap[route] = { version: version, moduleName: moduleName, methodName: methodName }","        routes[route] = createEndpointChain(module, method, getMiddlewareChain(middlewareList, route))","      })","    })","  })","  this.modules = modules","  this.middlewareList = middlewareList","  this.defaultRoutes = routes","}","","function normalizeCase(str) {","  return str.replace(/([A-Z][^A-Z]*)/g, '_$1').replace(/^(_)/, '').toLowerCase()","}","","function getEndpointDescription(endpoint) {","  var xRegExp = XRegExp('(?&lt;version&gt;[^/]+)/(?&lt;moduleName&gt;[^#]+)#(?&lt;methodName&gt;.+)')","  var result = XRegExp.exec(endpoint, xRegExp)","  return {","    version: result.version,","    moduleName: result.moduleName,","    methodName: result.methodName","  }","}","","function getRouteParams(xRegExpResult, xRegExp, defaults) {","  var params = Object.create(null)","  if (xRegExp.xregexp.captureNames) {","    xRegExp.xregexp.captureNames.forEach(function (paramName) {","      if (xRegExpResult[paramName] !== undefined) {","        params[paramName] = xRegExpResult[paramName]","      }","    })","  }","  Object.keys(defaults).forEach(function (paramName) {","    if (params[paramName] === undefined) {","      params[paramName] = defaults[paramName]","    }","  })","  return params","}","","function getMiddlewareChain(middlewareList, route) {","  var chain = []","  if (middlewareList) {","    middlewareList.forEach(function (middleware) {","      if (route.match(middleware.route)) {","        chain.push(middleware.handle)","      }","    })","  }","  return chain","}","","function getLastChainRing(endpoint) {","  return function (request, response, callback) {","    try {","      endpoint(request, response)","      callback()","    } catch (err) {","      callback(err)","    }","  }","}","","function createEndpoint(scope, method) {","  var endpoint = Object.create(null)","  if (typeof method === 'function') {","    var endpointFn = getLastChainRing(method.bind(scope))","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      endpoint[httpMethod.toUpperCase()] = endpointFn","    })","  } else {","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      if (typeof method[httpMethod] === 'function') {","        endpoint[httpMethod.toUpperCase()] = getLastChainRing(method[httpMethod].bind(scope))","      }","    })","  }","  return endpoint","}","","function createEndpointChain(scope, method, chain) {","  var endpointChain = Object.create(null)","  if (typeof method === 'function') {","    chain.push(getLastChainRing(method.bind(scope)))","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      endpointChain[httpMethod.toUpperCase()] = chain","    })","  } else {","    Router.prototype.HTTP_METHODS.forEach(function (httpMethod) {","      if (typeof method[httpMethod] === 'function') {","        endpointChain[httpMethod.toUpperCase()] = chain.slice(0)","        endpointChain[httpMethod.toUpperCase()].push(getLastChainRing(method[httpMethod].bind(scope)))","      }","    })","  }","  return endpointChain","}","","function fillObject (targetObj, fillObj) {","  Object.keys(fillObj).forEach(function (key) {","    if (!targetObj.hasOwnProperty(key)) {","      targetObj[key] = fillObj[key]","    }","  })","}"];
