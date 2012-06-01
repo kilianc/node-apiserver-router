@@ -152,7 +152,7 @@ describe('Router', function () {
       checkChain(router, '/1/test/foo_api', [fakeMiddlewares[0], fakeMiddlewares[2], fakeMiddlewares[3], fakeMiddlewares[5]], 'fooApi')
       checkChain(router, '/1/test/post', [fakeMiddlewares[0], fakeMiddlewares[4], fakeMiddlewares[5]], 'post')
       checkChain(router, '/1/test/wrong_case_api', [fakeMiddlewares[0], fakeMiddlewares[2], fakeMiddlewares[5]], 'wrong_case_api')
-      checkChain(router, '/1/test/photo', [fakeMiddlewares[0], fakeMiddlewares[5]], 'photos', ['get', 'post'])
+      checkChain(router, '/1/test/photo', [fakeMiddlewares[0], fakeMiddlewares[5]], 'photo', ['GET', 'POST'])
     })
     it('should return the functions chain / custom defaultRoute', function () {
       router = new Router({ defaultRoute: '/:module/api/:version/:method' })
@@ -168,7 +168,7 @@ describe('Router', function () {
       checkChain(router, '/test/api/1/foo_api', [fakeMiddlewares[0], fakeMiddlewares[2], fakeMiddlewares[3], fakeMiddlewares[5]], 'fooApi')
       checkChain(router, '/test/api/1/post', [fakeMiddlewares[0], fakeMiddlewares[4], fakeMiddlewares[5]], 'post')
       checkChain(router, '/test/api/1/wrong_case_api', [fakeMiddlewares[0], fakeMiddlewares[2], fakeMiddlewares[5]], 'wrong_case_api')
-      checkChain(router, '/test/api/1/photo', [fakeMiddlewares[0], fakeMiddlewares[5]], 'photos', ['get', 'post'])
+      checkChain(router, '/test/api/1/photo', [fakeMiddlewares[0], fakeMiddlewares[5]], 'photo', ['get', 'post'])
     })
   })
   describe('#getCustom()', function () {
@@ -176,13 +176,13 @@ describe('Router', function () {
       router = new Router()
       router.update({ 1: { test: objectModule } }, [
         { route: /.+/, handle: fakeMiddlewares[0] },
-        { route: /$\/post/, handle: fakeMiddlewares[1] },
+        { route: /^\/post/, handle: fakeMiddlewares[1] },
         { route: /st/, handle: fakeMiddlewares[2] },
         { route: /^\/p/, handle: fakeMiddlewares[3] }
       ])
       router.addRoute('/post/:param1/:param2', '1/test#post')
       router.addRoute('/test_module/:param1/:param2', '1/test#post')
-      router.addRoute(XRegExp('^/p/(?<message>[\\w!]+)$'), '1/test#post')
+      router.addRoute(XRegExp('^/p$'), '1/test#post')
       checkChain(router, '/post', [fakeMiddlewares[0], fakeMiddlewares[1], fakeMiddlewares[2], fakeMiddlewares[3]], 'post')
       checkChain(router, '/test_module', [fakeMiddlewares[0], fakeMiddlewares[2]], 'post')
       checkChain(router, '/p', [fakeMiddlewares[0], fakeMiddlewares[3]], 'post')
@@ -317,6 +317,7 @@ function checkChain(router, route, expetedChain, expetedMethodName, httpMethods)
   generateFakeRequests(route, null, httpMethods).forEach(function (request) {
     var chain = router.get(request)
     should.exist(chain, route)
+    chain = chain.slice(0)
     checkLastChainLink(chain.pop(), request.method, expetedMethodName)
     chain.should.eql(expetedChain, route)
   })
@@ -328,9 +329,9 @@ function checkLastChainLink(fn, expectedHttpMethod, expectedMethodName) {
     ok = true
     module.database.should.be.equal('fake_database')
     methodName.should.be.equal(expectedMethodName)
-    httpMethod.should.be.equal(expectedHttpMethod)
+    httpMethod.should.be.equal(expectedHttpMethod, 331)
   }, expectedHttpMethod, function (err) {
-    throw err
+    should.not.exist(err)
   })
   ok.should.be.ok
 }

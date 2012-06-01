@@ -16,8 +16,8 @@ module.exports.prototype = {
   wrong_case_api: getFakeApi('wrong_case_api'),
   AA: getFakeApi('AA'),
   photo: {
-    get: getFakeApi('photo', 'get'),
-    post: getFakeApi('photo', 'post'),
+    get: getFakeApi('photo', 'GET'),
+    post: getFakeApi('photo', 'POST'),
     delete: 'not_a_function'
   }
 }
