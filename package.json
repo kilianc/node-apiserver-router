@@ -16,8 +16,7 @@
     "node": ">= v0.6.x"
   },
   "dependencies": {
-    "xregexp": "2.0.x",
-    "linkedlist": "1.0.x"
+    "xregexp": "2.0.x"
   },
   "devDependencies": {
     "mocha": "1.0.x",

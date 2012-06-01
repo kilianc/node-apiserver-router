@@ -113,8 +113,8 @@ describe('Router', function () {
       router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post')
       router.customRoutes.should.have.length(1)
-      router.customRoutes.head.should.have.keys(['xRegExp', 'endpoint', 'defaults'])
-      new should.Assertion(router.customRoutes.head.defaults).eql({})
+      router.customRoutes[0].should.have.keys(['xRegExp', 'endpoint', 'defaults'])
+      new should.Assertion(router.customRoutes[0].defaults).eql({})
       new should.Assertion(router.disabledDefaultRoutes).eql({ '/1/test/post': true })
     })
     it('should store a custom route with default params', function () {
@@ -122,7 +122,7 @@ describe('Router', function () {
       router = new Router()
       router.update({ 1: { test: objectModule } })
       router.addRoute('/test_module/:id/:verbose', '1/test#post', defaults)
-      router.customRoutes.head.defaults.should.equal(defaults)
+      router.customRoutes[0].defaults.should.equal(defaults)
     })
     it('should store a custom route with custom defaultRoute', function () {
       router = new Router({ defaultRoute: '/:module/:method/:version' })
@@ -262,26 +262,6 @@ describe('Router', function () {
           request.querystring.should.eql(item[2], item[0])
         })
       })
-    })
-    it('should order custom routes by hits', function () {
-      router = new Router()
-      router.update({ 1: { test: objectModule } })
-      var customRoutes = [
-        ['/post', '1/test#post', { pathname: '/post' } ],
-        ['/public_api', '1/test#amAPublicApi', { pathname: '/public_api' }],
-        ['/wrong_case_api', '1/test#wrong_case_api', { pathname: '/wrong_case_api' }],
-        ['/aliases/post', '1/test#post', { pathname: '/aliases/post' }],
-        ['/aliases/public_api', '1/test#amAPublicApi', { pathname: '/aliases/public_api' }],
-        ['/aliases/wrong_case_api', '1/test#wrong_case_api', { pathname: '/aliases/wrong_case_api' }]
-      ]
-      router.addRoutes(customRoutes)
-      for (var i = 0; i < 20; i++) {
-        var route = customRoutes[Math.round(Math.random() * (customRoutes.length-1))][0]
-        generateFakeRequests(route).forEach(function (request) {
-          router.get(request)
-          route.should.be.eql(router.customRoutes.head.defaults.pathname, route)
-        })
-      }
     })
   })
   describe('#get()', function () {
