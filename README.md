@@ -1,4 +1,4 @@
-# apiserver-router [![build status](https://secure.travis-ci.org/kilianc/node-apiserver-router.png?branch=master)](http://travis-ci.org/kilianc/node-apiserver-router)
+# apiserver-router [![build status](https://secure.travis-ci.org/kilianc/node-apiserver-router.png?branch=new-router)](http://travis-ci.org/kilianc/node-apiserver-router)
 
 A fast API router with integrated caching system bundled with [ApiServer](https://github.com/kilianc/node-apiserver)
 

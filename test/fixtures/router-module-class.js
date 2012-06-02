@@ -4,8 +4,11 @@ function getFakeApi(name, httpMethod) {
   }
 }
 
-module.exports = {
-  database: 'fake_database',
+module.exports = function () {
+  this.database = 'fake_database'
+}
+
+module.exports.prototype = {
   _privateMethod: getFakeApi('_privateMethod'),
   amAPublicApi: getFakeApi('amAPublicApi'),
   fooApi: getFakeApi('fooApi'),
