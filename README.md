@@ -6,84 +6,141 @@ A fast API router with integrated caching system bundled with [ApiServer](https:
 
     ⚡ npm install apiserver-router
 
-```javascript
+```js
 var Router = require('apiserver-router')
 ```
 
-## Example
+## Quick Look
 
-```javascript
-var UserModule = function (options) {
-  this.options = options
-}
+```js
 
-// will be translated into /1/random_photo_module/create_album
-UserModule.prototype.createAlbum = function (request, response) { ... }
-
-// will be translated into /1/random_photo_module/upload_photo
-UserModule.prototype.uploadPhoto = function (request, response) { ... }
-
-// private method, skipped
-UserModule.prototype._checkFileExtension = function (request, response) { ... }
-
-```
-
-```javascript
-var modules = {
-  // API version
+// here just for example purposes,
+// you don't need to call update directly, ApiServer will do it for you
+router.update({
   '1': {
-    // API resource
-    randomPhotoModule: UserModule
+    'fooModule': {
+      foo: {
+        get:  function (request, response) {
+          // GET http://localhost/foo/1/true    => request.querystring === { id: '1', verbose: 'true' }
+          // GET http://localhost/foo_verbose/1 => request.querystring === { id: '1', verbose: true }
+        },
+        post: function (request, response) {
+          // GET http://localhost/foo/1/true    => request.querystring === { id: '1', verbose: 'true' }
+          // GET http://localhost/foo_verbose/1 => request.querystring === { id: '1', verbose: true }
+        },
+      },
+      bar: function (request, response) {
+        // * http://localhost/1/foo_module/bar
+        // * http://localhost/bar
+      }
+    }
   }
-}
-router.update(modules)
+})
 
-//simulate a request object
-var fakeRequest = { pathname: '/1/random_photo_module/upload_photo' }
-router.get(fakeRequest) // returns the associated chain
+// custom routing
+router.addRoutes([
+  ['/foo', '1/fooModule#foo'],
+  ['/foo/:id/:verbose', '1/fooModule#foo'],
+  ['/foo_verbose/:id', '1/fooModule#foo', { 'verbose': true }],
+  ['/bar', '1/fooModule#bar', {}, true] // will keep default routing too
+])
+
+// you can also keep your routes on a separate .js(on) file
+router.addRoutes(require('./config/routes'))
 ```
+
+For full and detailed examples look at the [examples folder](https://github.com/kilianc/node-apiserver/tree/master/examples)
 
 ## Class Method: constructor
 
 ### Syntax:
 
-```javascript
-new Router()
+```js
+new Router([options])
 ```
 
-## Class Method: update
+### Available Options:
 
-Builds and caches the routes. You must call it every time a middleware or a module changes.
+* __defaultRoute__ - (`String`: defaults to "/:version/:module/:method") the pattern for the default route
+
+### Example:
+
+```js
+var router = new Router({
+  // will disable the API versioning
+  defaultRoute: '/:module/:method'
+})
+
+// will shift default routes to /api
+router.defaultRoute = '/api/:version/:module/:method'
+```
+
+## Class Method: addRoute
+
+Adds a custom route to the router.
+
+The route can be both a `String` or a [`XRegExp`](https://github.com/slevithan/XRegExp). If you pass a `String`, it will be compiled as XRegExp and all matches of `:paramName` will create a new parameter in the `request.querystring` object.
+
+The router uses XRegExp because of its named group feature and the full RegExp support. You can play around by yourself reading the official documentation.
+
+A custom route will disable by default the standard route associated/cached with the __endpoint__. You can keep the standard one passing `true` as `keepDefault` parameter.
+
+`defaultParameters` act as fill for missing parameters, but explicit querystring will overwrite both `default` and `routes parameter`.
 
 ### Syntax:
 
-```javascript
-Router.prototype.update(modules[, middlewareList])
+```js
+Router.prototype.addRoute(route, methodDescription, [defaultParameters], [keepDefault])
 ```
 
 ### Arguments:
 
-* __modules__ - (`Object`) an hashtable of [API modules](https://github.com/kilianc/node-apiserver/tree/master#modules)
-* __middlewareList__ - (`Array`) a list of [middleware](https://github.com/kilianc/node-apiserver/tree/master#middleware)
+* __route__ - (`String|XRegExp`) the custom route to match, if string will be compiled to XRegExp
+* __methodDescription__ - (`String`) a string in the following form "apiVersion/moduleName#methodName"
+* __defaultParameters__ - (`Object`) an hash table containing default querystring paramenters
+* __keepDefault__ - (`Boolean`: defaults to false) if true the default route will not be disabled
 
-### Example:
+### Example
 
-```javascript
-...
-var router = new Router()
-router.update({
-  v1: {
-    user: {
-      signin: function (request, response) { /* function body */ },
-      signout: function (request, response) { /* function body */ },
-      signup: function (request, response) { /* function body */ }
-    }
-  }
-}, [
-  { route: /signup/, handle: randomMiddleware1 },
-  { route: /sign/, handle: randomMiddleware2 }
+```js
+router.addRoute('/users/:id', '1/usersModule#getUser')
+router.addRoute('/users/verbose/:id', '1/usersModule#getUser', { verbose: true })
+router.addRoute('/users/:limit/:page', '1/usersModule#list', { limit: 20, page: 1 })
+router.addRoute(XRegExp('/users/status/(?<message>[\\w]+)'), '1/usersModule#saveStatus', null, true)
+```
+yelds
+
+    /users/345                                => { id: '345' }
+    /users/verbose/345                        => { id: '345', verbose: true }
+    /users/verbose/345?id=201&verbose=false   => { id: '201', verbose: 'false' }
+    /users/verbose/345?id=201&verbose=        => { id: '201', verbose: undefined }
+    /users/status/coding%20likeaboss?id=34    => { id: '34', message: 'coding likeaboss' }
+    /users/10/2                               => { limit: '10', page: '2' }
+
+
+## Class Method: addRoutes
+
+Call `addRoute` n times applying the arguments array
+
+### Syntax:
+
+```js
+Router.prototype.addRoutes(routes)
+```
+
+### Arguments:
+
+* __routes__ - (`Array`) an `Array` of `Array` with `addRoute` parameters
+
+### Examples
+
+```js
+router.addRoutes([
+  ['/users/:id', '1/usersModule#getUser'],
+  ['/users/verbose/:id', '1/usersModule#getUser', { verbose: true }],
+  ['/users/:limit/:page', '1/usersModule#list', { limit: 20, page: 1 }],
+  [XRegExp('/users/status/(?<message>[\\w]+)'), '1/usersModule#saveStatus', null, true]
 ])
-...
 ```
 
 ## Class Method: get
@@ -92,7 +149,7 @@ This method returns a list of functions that will be executed with [fnchain](htt
 
 ### Syntax:
 
-```javascript
+```js
 Router.prototype.get(request)
 ```
 
@@ -102,11 +159,25 @@ Router.prototype.get(request)
 
 ### Example:
 
-```javascript
-...
-router.get(req)
-...
+```js
+var chanin = router.get(request)
 ```
+
+## Class Method: update
+
+Builds and caches the routes. You must call it every time a middleware or a module changes.
+
+### Syntax:
+
+```js
+Router.prototype.update(modules[, middlewareList])
+```
+
+### Arguments:
+
+* __modules__ - (`Object`) an hashtable of [API modules](https://github.com/kilianc/node-apiserver/tree/master#modules)
+* __middlewareList__ - (`Array`) a list of [middleware](https://github.com/kilianc/node-apiserver/tree/master#middleware)
+
 
 # How to contribute
 
