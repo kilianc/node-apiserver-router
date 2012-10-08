@@ -1,7 +1,7 @@
 REPORTER = spec
 
 test:
-	@NODE_ENV=test ./node_modules/.bin/mocha test/*-test.js $(OPT) --reporter $(REPORTER)
+	@NODE_ENV=test ./node_modules/.bin/mocha test/*-test.js $(OPT) --colors --reporter $(REPORTER)
 
 test-bail:
 	@rm -rf lib-cov
